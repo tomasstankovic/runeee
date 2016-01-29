@@ -1,6 +1,6 @@
 # ![Runeee](client/img/logo_full_blue@2x.png?raw=true "Runeee")
 
-## screenshots
+# App screenshots
 
 ## User Profile
 ![Profile screenshot](app_screenshots/5_profile.png?raw=true "Profile screenshot")
