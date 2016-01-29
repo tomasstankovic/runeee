@@ -1,0 +1,60 @@
+/**
+ * Modal window.
+ */
+
+.modal-shadow
+  display none
+  z-index 20
+  position absolute
+  top 0
+  bottom 0
+  left 0
+  right 0
+  background rgba(0, 0, 0, 0)
+  transition background 500ms
+
+  &.show
+    display block
+
+  &.show-bg
+    background rgba(55, 71, 79, .6)
+
+.modal
+  display none
+  z-index 25
+  position fixed
+  top 50px
+  left 50%
+  width 540px
+  height 292px
+  margin-left -270px
+  opacity 0
+  transform translateY(-50px)
+  transition opacity 500ms, transform 500ms
+
+  &:hover
+    .modal-close
+      opacity .6
+
+  &.show
+    display block
+
+  &.show-modal
+    opacity 1
+    transform translateY(0px)
+
+  .form-static
+    border 1px solid #efefef
+
+
+.modal-close
+  position absolute
+  top 5px
+  right 10px
+  color $blue
+  font-size 25px
+  opacity .2
+  transition opacity 200ms
+
+  &:hover
+    opacity 1 !important

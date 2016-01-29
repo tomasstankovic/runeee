@@ -1,0 +1,8 @@
+{
+  "name": "runeee.com",
+  "version": "0.0.29",
+  "private": true,
+  "dependencies": {
+    "moment": "~2.10.3"
+  }
+}

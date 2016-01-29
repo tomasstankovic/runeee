@@ -1,0 +1,408 @@
+extends ../layout
+
+block content
+  if(update == 'ok')
+    div.alert-msg.ok
+      p <strong>YEAH!</strong> #{__('Your profile was updated successfully!')}
+  else if(update == 'ko')
+    div.alert-msg.ko
+      p <strong>YEAH!</strong> #{__('Edit your profile failed. :(')}
+  else if(update == 'eraseOK')
+    div.alert-msg.ok
+      p <strong>YEAH!</strong> #{__('The activity was successfully deleted!')}
+  else if(update == 'userNotFound')
+    div.alert-msg.ko
+      p <strong>No :(</strong> #{__('User not found!')}
+  else if (update == 'userAddOK')
+    div.alert-msg.ok
+      p <strong>YEAH!</strong> #{__('We send email to your new friend for accept!')}
+  else if (update == 'connectOK')
+    div.alert-msg.ok
+      p <strong>YEAH!</strong> #{__('We have now a one new friend!')}
+  else if (update == 'connectOld')
+    div.alert-msg.ko
+      p <strong>Stop!</strong> #{__('You have this user as friend yet.')}
+  else if(update == 'eraseTestOK')
+    div.alert-msg.ok
+      p <strong>YEAH!</strong> #{__('The lactate test was successfully deleted!')}
+        
+  div.profile-left
+    if user.avatar_url == '/build/img/default.png'
+      div.profile__picture.without-img
+        div.profile__picture__text
+          if user.isCoach
+            p.coach-badge #{__('Coach')}
+          h2 #{user.name} <br/> #{user.surname}
+    else
+      div.profile__picture
+        img(src="#{user.avatar_url}_300x300?v=#{user.avatarDate}")
+        div.profile__picture__text
+          if user.isCoach
+            p.coach-badge #{__('Coach')}
+          h2 #{user.name} <br/> #{user.surname}
+          
+    div.profile-container.padding-top
+      div.profile-info
+        span.profile-info__label #{__('Nickname')}:
+        span.profile-info__detail #{user.nick}
+        
+      div.profile-info.half
+        span.profile-info__label #{__('Age')}:
+        span.profile-info__detail #{user.age}
+          span.profile-info__detail-unit years
+      
+      div.profile-info.half
+        span.profile-info__label #{__('Gender')}:
+        span.profile-info__detail #{user.gender}
+  
+  
+      div.profile-info.half
+        span.profile-info__label #{__('Weight')}:
+        span.profile-info__detail #{user.weight}
+          span.profile-info__detail-unit kg
+        
+      div.profile-info.half
+        span.profile-info__label #{__('Height')}:
+        span.profile-info__detail #{user.height}
+          span.profile-info__detail-unit cm
+    
+    if userSports.length > 0
+      div.profile-container
+        span.profile-info__heading.margin-top #{__('Sports')}
+        
+      div.profile-container.no-padding
+        each sport in userSports
+          div.profile-sport
+            span #{__(sport.title)}
+            img(src='/build/img/icons/sports/#{sport.value}@2x.png' width='40' height='40')        
+          
+    div.profile-container.padding-top
+      span.profile-info__heading #{__('Body info')}
+      
+      div.profile-info.half
+        span.profile-info__label #{__('Vo2max')}:
+        span.profile-info__detail #{user.vo2max}
+          
+      div.profile-info.half
+        span.profile-info__label #{__('HR max')}:
+        span.profile-info__detail #{user.hr.max}
+          span.profile-info__detail-unit #{__('bpm')}
+  
+      div.profile-info.half
+        span.profile-info__label #{__('AP')}:
+        span.profile-info__detail #{user.hr.ap}
+          span.profile-info__detail-unit #{__('bpm')}
+        
+      div.profile-info.half
+        span.profile-info__label #{__('ANP')}:
+        span.profile-info__detail #{user.hr.anp}
+          span.profile-info__detail-unit #{__('bpm')}
+          
+      if isOwnProfile
+        div.profile-info.center.margin-top-big
+          a.button.sidebar-dark.border.showModal(href='#modalConnect') #{__('Connect user')}
+  
+  div.profile-right
+    
+    div.component
+      div.row
+        div.float-left
+          if isOwnProfile
+            h2 #{__('Hi')}, #{user.nick}
+            p.no-margin #{__('Keep up to date your profile!')}
+          else 
+            h2 #{user.nick}
+            p.no-margin #{__('User profile')}
+        if isOwnProfile
+          a.button.blue.border.vertical-center.small.right(href='/profile/edit') <i class="fa fa-cog"></i> #{__('Edit profile')}
+  
+    if lactatesLen > 0
+      div.component.white
+        div.row
+          div.float-left
+            h2 #{__('Lactate test')}
+            if isOwnProfile
+              p.no-margin #{__('This is your actually lactate test.')}
+            else
+              p.no-margin #{__('This is user actually lactate test.')}
+          if isOwnProfile
+            a.button.blue.border.vertical-center.small.right.show-on-hover(href='/lactate-test/add') <i class="fa fa-plus-circle"></i> <strong>#{__('Add')}</strong> #{__('test')}
+          else if isUserCoach  
+            a.button.blue.border.vertical-center.small.right.show-on-hover(href='/lactate-test/add?coachFor=#{user._id}') <i class="fa fa-plus-circle"></i> <strong>#{__('Add')}</strong> #{__('test for your trainee')}
+        div.row
+          p 
+            strong Ukazka ze data existuju. Vo finale graf + dalsie info?
+          p 4x #{lactate.intervalDistance}m
+          p Dátum: #{lactate.date}
+          
+      if lactatesLen > 1
+        div.row.center
+          a.button.blue.dark-inverse.border.small(href='/profile/#{user.url}/lactate-tests') <strong>#{__('Show')}</strong> #{__('all lactate tests')}
+  
+    else
+      div.component.no-padding.empty.with-icon.bg-test
+        div.component.white.margin-top
+          div.row
+            img(src='/build/img/icons/no-test.png' width='171' height='146')
+            h2 #{__('No Lactate test!')}
+            if isOwnProfile
+              p.no-margin #{__('Let\'s get started with your bloody test.')}
+              a.button.blue.border.small(href='/lactate-test/add') <i class="fa fa-plus-circle"></i> <strong>#{__('Add')}</strong> #{__('lactate test')}  
+            else
+              p.no-margin #{__('User don\'t have any lactate test.')}
+  
+    // Activities  
+    div.component.no-side-padding.no-margin-bottom
+      div.row
+        div.float-left
+          h2 #{__('Activities')}
+          if isOwnProfile
+            if activities.length > 0
+              p.no-margin #{__('My last activities')}
+            else
+              p.no-margin #{__('You dont have any activities!')}
+          else 
+            if activities.length > 0
+              p.no-margin #{__('User last activities')}
+            else
+              p.no-margin #{__('User dont have any activities!')}
+        
+        if isOwnProfile
+          a.button.blue.border.small.right.show-on-hover(href='/activity/add') <i class="fa fa-plus-circle"></i> <strong>#{__('Add')}</strong> #{__('activity')}
+      
+      if activitiesLen > 0
+        div.activity
+          each activity in activities
+            - var currActivitySport = {};
+            
+            each sport in sports
+              if sport._id.toString() == activity.sport.toString()
+                - currActivitySport = sport;
+                
+            a.activity-item(href='/activity/#{activity._id}') 
+              if activity.isCompetition
+                div.competition-mark
+                  img(src='/build/img/icons/competition.png' width='16' height='16')
+            
+              img.left-img(src='/build/img/icons/sports/#{currActivitySport.value}-grey@2x.png' width='53' height='53')
+              div.left
+                span.title.textLimiter(title='#{activity.title}') #{activity.title}
+                span.sport-text #{currActivitySport.title}
+                
+              div.right
+                span.activity-date #{activity.date} 
+                span.limiter
+                if activity.distance
+                  span <i class="fa fa-arrows-h"></i> #{activity.distance}km 
+                if activity.duration.hours || activity.duration.minutes || activity.duration.seconds
+                  span 
+                    i.fa.fa-clock-o
+                    if activity.duration.hours
+                      span #{activity.duration.hours}h  
+                    if activity.duration.minutes
+                      span #{activity.duration.minutes}m 
+                    if activity.duration.seconds
+                      span #{activity.duration.seconds}s
+                
+        if activitiesLen > 4
+          div.row.center
+            a.button.blue.dark-inverse.border.small(href='/profile/#{user.url}/activities') <strong>#{__('Show')}</strong> #{__('all activities')}
+      else
+        div.component.no-padding.empty.with-icon.bg-activity
+          div.component.white.margin-top
+            div.row
+              img(src='/build/img/icons/no-activity.png' width='171' height='146')
+              h2 #{__('No activities!')}
+              if isOwnProfile
+                p.no-margin #{__('Let\'s move! Do something for your body.')}
+                a.button.blue.border.small(href='/activity/add') <i class="fa fa-plus-circle"></i> #{__('Add')} #{__('activity')}  
+              else
+                p.no-margin #{__('User don\'t have any activities.')}
+      
+    // Trainings
+    div.component.no-side-padding
+      div.row
+        div.float-left
+          h2 #{__('Trainings')}
+          if isOwnProfile
+            if trainings.length > 0
+              p.no-margin #{__('My closest trainings')}
+            else
+              p.no-margin #{__('You dont have planed any trainings!')}
+          else 
+            if trainings.length > 0
+              p.no-margin #{__('User closest trainings')}
+            else
+              p.no-margin #{__('User dont have planed any trainings!')}
+                      
+        if isOwnProfile
+          a.button.blue-inverse.border.small.right.show-on-hover(href='/training/add') <i class="fa fa-file-text-o"></i> <strong>#{__('Plan')}</strong> #{__('training')}
+        else if isUserCoach  
+          a.button.blue-inverse.border.small.right(href='/training/add?coachFor=#{user._id}') <i class="fa fa-file-text-o"></i> <strong>#{__('Plan')}</strong> #{__('tr for your trainee')}
+                    
+      if trainingsLen > 0
+        div.activity
+          each training in trainings
+            - var currActivitySport = {};
+                        
+            each sport in sports
+              if sport._id.toString() == training.sport.toString()
+                - currTrainingSport = sport;
+                            
+            a.activity-item.training(href='/training/#{training._id}' class='hr-#{training.hrZone}') 
+              if training.isCompetition
+                div.competition-mark
+                  img(src='/build/img/icons/competition.png' width='16' height='16')
+                              
+              img.left-img(src='/build/img/icons/sports/#{currTrainingSport.value}-grey@2x.png' width='53' height='53')
+              div.left
+                span.title.textLimiter(title='#{training.title}') #{training.title}
+                span.sport-text #{currTrainingSport.title}
+                                  
+              div.right
+                span.activity-date #{training.date} 
+                span.limiter
+                if training.distance
+                  span <i class="fa fa-arrows-h"></i> #{training.distance}km 
+                if training.duration.hours || training.duration.minutes || training.duration.seconds
+                  span 
+                    i.fa.fa-clock-o
+                    if training.duration.hours
+                      span #{training.duration.hours}h  
+                    if training.duration.minutes
+                      span #{training.duration.minutes}m 
+                    if training.duration.seconds
+                      span #{training.duration.seconds}s
+                              
+        if trainingsLen > 4
+          div.row.center
+            a.button.blue.dark-inverse.border.small(href='/profile/#{user.nick}/trainings') <strong>#{__('Show')}</strong> #{__('all trainings')}
+      else
+        div.component.no-padding.empty.with-icon.bg-activity
+          div.component.white.margin-top
+            div.row
+              img(src='/build/img/icons/no-activity.png' width='171' height='146')
+              h2 #{__('No trainings!')}
+              if isOwnProfile
+                p.no-margin #{__('Let\'s move! Do something for your body.')}
+                a.button.blue.border.small(href='/training/add') <i class="fa fa-plus-circle"></i> #{__('Add')} #{__('training')}  
+              else
+                p.no-margin #{__('User don\'t have any trainings.')}
+                    
+                      
+    div.row.no-overflow.clearfix
+      if isCompleteZones
+        div.component.no-padding.part-3
+          div.component.white
+            div.row
+              h2 #{__('HR zones')}
+              p.no-margin #{__('Beats per minute')}
+                
+            div.row-component
+              img.row-shape(src='/build/img/hr-shape.png' width='12' height='304')
+              div.row-item.border-top
+                span.row-item__zone #{__('Maximum zone')}
+                span.row-item__text #{user.hr.zones.zone5.beats} - #{user.hr.max}
+              
+              div.row-item
+                span.row-item__zone #{__('Interval training zone')}
+                - var zone4end = user.hr.zones.zone5.beats - 1;
+                span.row-item__text #{user.hr.zones.zone4.beats} - #{zone4end}
+                  
+              div.row-item
+                span.row-item__zone #{__('Pace endurance zone')}
+                - var zone3end = user.hr.zones.zone4.beats - 1;
+                span.row-item__text #{user.hr.zones.zone3.beats} - #{zone3end}
+                  
+              div.row-item
+                span.row-item__zone #{__('Aerobic zone')}
+                - var zone2end = user.hr.zones.zone3.beats - 1;
+                span.row-item__text #{user.hr.zones.zone2.beats} - #{zone2end}
+                  
+              div.row-item
+                span.row-item__zone #{__('Regeneration zone')}
+                - var zone1end = user.hr.zones.zone2.beats - 1;
+                span.row-item__text #{user.hr.zones.zone1.beats} - #{zone1end}
+      else
+        div.component.no-padding.part-3.empty
+          div.component.white
+            div.row
+              h2 #{__('Hr zones?')}
+              if isOwnProfile
+                p.no-margin #{__('Let\'s set your boundaries!')}
+                a.button.blue.border.small(href='/profile/#{user.url}/edit') <i class="fa fa-plus-circle"></i> #{__('Add')} #{__('hr zones')}  
+              else
+                p.no-margin #{__('User don\'t have hr zones data.')}
+              
+      if activities.length > 0
+        div.component.no-padding.part-3
+          div.component.white
+            div.row
+              h2 #{__('Sport stats')}
+              p.no-margin #{__('Working hours')}
+              p Štatistiky budú zapracované zrejme v trochu neskoršej fáze vývoja.
+      else
+        div.component.no-padding.part-3.empty
+          div.component.white
+            div.row
+              h2 #{__('Sport stats?')}
+              if isOwnProfile
+                p.no-margin #{__('Let\'s add your activities!')}
+                a.button.blue.border.small(href='/activity/add') <i class="fa fa-plus-circle"></i> #{__('Add')} #{__('activity')} 
+              else
+                  p.no-margin #{__('User don\'t have any activities.')}
+            
+      if connectedPeoplesLen > 0
+        div.component.no-padding.part-3
+          div.component.white
+            div.row
+              h2 #{__('Connected users')}
+              p.no-margin #{__('Coaches or trainees')}
+              
+            div.row-component(class=(connectedPeoplesLen > 3 ? 'no-margin-bottom' : undefined))
+              hr
+              each people in connectedPeoples
+                a.row-item.user(href='/profile/#{people.url}')
+                  if people.avatarDate
+                    img(src='#{people.avatar_url}_40x40?v=#{people.avatarDate}' width='40' height='40')
+                  else
+                    img(src='#{people.avatar_url}' width='40' height='40')
+                  if people.isCoach
+                    span.row-item__sub #{__('Coach')}
+                  else
+                    span.row-item__sub #{__('Trainee')}
+                  if people.name || people.surname
+                    span.row-item__text #{people.name} #{people.surname}
+                  else
+                    span.row-item__text #{people.nick}
+                    
+              if connectedPeoplesLen > 3
+                div.center
+                  a.button.dark-inverse.border.small.margin-top(href='/profile/#{user.url}/connected-peoples') <i class="fa fa-plus-circle"></i> #{__('Show')} #{__('all')}  
+                
+      else
+        div.component.no-padding.part-3.empty
+          div.component.white
+            div.row
+              h2 #{__('Connected users')}
+              if isOwnProfile
+                p.no-margin #{__('Let\'s add your activities!')}
+                a.button.blue.border.small.showModal(href='#modalConnect') <i class="fa fa-plus-circle"></i> #{__('Add')} #{__('people')}   
+              else
+                p.no-margin #{__('User don\'t have any connected preoples.')}
+            
+  div.modal-shadow#modal-shadow
+  div.modal#modalConnect
+    form.form-static(action='/profile/add-relation', method='POST')
+      h2.form-static__header <strong>#{__('Connect')}</strong> #{__('user')}
+      a.modal-close(href='#') <i class="fa fa-times-circle"></i>
+      
+      div.container
+        span.input.input--hoshi
+          input.input__field.input__field--hoshi(type='text' name='nick')
+          label.input__label.input__label--hoshi
+            span.input__label-content.input__label-content--hoshi #{__('Nickname')}
+        
+        div.row.margin-top
+          button.submit.button.blue.border.soft-half.center.small(type='submit') <i class="fa fa-plus-circle"></i> <strong>#{__('Add')}</strong> #{__('user')}            
+          br

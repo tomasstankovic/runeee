@@ -1,0 +1,25 @@
+doctype html
+html
+  head
+    include ../head
+    body.homepage
+    
+      div.homepage__header
+        a.homepage__logo(href='/') <img class='homepage__logo__img' src='build/img/logo_full@2x.png' width='125' height='25' />
+        
+        include ../menu
+  
+      div.container.fluid.margin-top
+        h1 RUN FORREST, RUN!
+        p.homepage__text #{__('But don’t forget to upload your performance into Runeee. Runeee is completely free web tool for recording your perfomances, cooperating with your training and most important to show you your current skills.')}
+        a.button.blue.whiteBg(href='/login') <strong>#{__('Start')}</strong> #{__('using runeee now')}
+        
+      div.homepage__footer
+        div.container.fluid
+          p 
+            <a class='link-underline blue' href='mailto:letsgo@runeee.com'>letsgo@runeee.com</a> | RUNEEE © 2015. #{__('All rights reserved')} 
+            <span>  |  </span>
+            if locale == 'en'
+              a.link-underline.blue(href='?lang=sk') Slovenčina
+            else if locale == 'sk'
+              a.link-underline.blue(href='?lang=en') English

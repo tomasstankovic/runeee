@@ -1,0 +1,57 @@
+extends ../layout
+
+block content
+  div.component.no-side-padding.no-margin-bottom.margin-top
+    div.row
+      div.float-left
+        h2 #{title} 
+      div.float-left
+        a.filter(href='#{url}' class=(urlPostfix == '') ? 'active' : '') #{__('All trainings')}
+        a.filter(href='#{url}?type=old' class=(urlPostfix == 'old') ? 'active' : '') #{__('All trainings with old')}
+        a.filter(href='#{url}?type=trainings' class=(urlPostfix == 'trainings') ? 'active' : '') #{__('Trainings')}
+        a.filter(href='#{url}?type=competitions' class=(urlPostfix == 'competitions') ? 'active' : '') #{__('Competitions')}
+        
+  if trainings.length > 0
+    div.activity.component.no-margin-top
+      each training in trainings
+        - var currActivitySport = {};
+        
+        each sport in sports
+          if sport._id.toString() == training.sport.toString()
+            - currActivitySport = sport;
+            
+        a.activity-item.training(href='/training/#{training._id}' class='hr-#{training.hrZone}') 
+          if training.isCompetition
+            div.competition-mark
+              img(src='/build/img/icons/competition.png' width='16' height='16')
+        
+          img.left-img(src='/build/img/icons/sports/#{currActivitySport.value}-grey@2x.png' width='53' height='53')
+          div.left
+            span.title.textLimiter(title='#{training.title}') #{training.title}
+            span.sport-text #{currActivitySport.title}
+            
+          div.right
+            span.activity-date #{training.date} 
+            span.limiter
+            if training.distance
+              span <i class="fa fa-arrows-h"></i> #{training.distance}km 
+            if training.duration.hours || training.duration.minutes || training.duration.seconds
+              span 
+                i.fa.fa-clock-o
+                if training.duration.hours
+                  span #{training.duration.hours}h  
+                if training.duration.minutes
+                  span #{training.duration.minutes}m 
+                if training.duration.seconds
+                  span #{training.duration.seconds}
+  else
+    div.component.empty.with-icon.bg-activity
+      div.component.white.margin-top
+        div.row
+          img(src='/build/img/icons/no-activity.png' width='171' height='146')
+          h2 #{__('No trainings!')}
+          if isOwnProfile
+            p.no-margin #{__('Let\'s move! Do something for your body.')}
+            a.button.blue.border.small(href='/training/add') <i class="fa fa-plus-circle"></i> #{__('Add')} #{__('training')}  
+          else
+            p.no-margin #{__('User don\'t have any training.')}

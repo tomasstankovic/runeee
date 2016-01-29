@@ -1,0 +1,25 @@
+extends ../layout
+
+block content
+  div.component.no-side-padding.no-margin-bottom.margin-top
+    div.row
+      div.float-left
+        h2 #{title}
+      div.float-left
+        a.filter(href='#{url}' class=(urlPostfix == '') ? 'active' : '') #{__('All users')}
+        a.filter(href='#{url}?type=coach' class=(urlPostfix == 'coach') ? 'active' : '') #{__('Coaches')}
+        a.filter(href='#{url}?type=athlete' class=(urlPostfix == 'athlete') ? 'active' : '') #{__('Athletes')}
+  
+  div.component
+    div.row
+      each user in users
+        a.user-box(href='/profile/#{user.nick}')
+          if user.avatarDate
+            img(src='#{user.avatar_url}_100x100?v=#{user.avatarDate}' width='100' height='100')
+          else
+            img(src='#{user.avatar_url}' width='100' height='100')
+          span.user-box__small-text #{user.nick}
+          span.user-box__big-text #{user.name} #{user.surname}
+            
+          if user.isCoach
+            span.user-box__coach-label #{__('Coach')}

@@ -1,0 +1,128 @@
+extends ../layout
+
+block content
+  form(action='/lactate-test/add' method='POST')
+    div.component.fixed-header.border-bottom.no-margin
+      div.row
+        div.float-left
+          h2.margin-top #{__('Add new lactate test')}
+        button.button.blue.border.vertical-center.small.right.no-margin-top(type='submit') <i class="fa fa-check"></i> <strong>#{__('Add')}</strong> #{__('lactate test')}
+        
+    div.edit-row.margin-top-big
+      div.container
+        p Laktátový test prebieha pri 4 intervaloch vo vzdialenosti od 800 do 2000m.
+        label Metre na jeden interval: 4x 
+        input(type='number' name='static[intervalDistance]' value='2000') 
+        span  m
+        br
+        br
+        
+        h3.margin-top #{__('Sport')}
+        div.select-menu
+          select(name='static[sport]')
+            each sport in sports
+              option(value='#{sport._id}') #{sport.title}
+          span.select-menu__top-label
+        
+        label Dátum: 
+        input(type='text' name='static[date]' value='10')
+        br
+        br
+        
+        label Čas: 
+        input(type='text' name='static[time][hours]' value='10')
+        input(type='text' name='static[time][minutes]' value='10')
+        span hh/mm
+        br
+        br
+        
+        label Teplota:
+        input(type='text' name='static[temperature]' value='10')
+        br
+        br
+        
+        label Miesto merania:
+        input(type='text' name='static[place]' value='10')
+        br
+        br
+        
+        hr
+        h2 1.Interval
+        
+        label Laktát: 
+        input(type='number' name='static[int-1][lactate]' value='1.3')
+        span  mmol/l 
+        br
+        br
+        
+        label HR max: 
+        input(type='text' name='static[int-1][hr-max]' value='152')
+        span  bpm
+        br
+        br
+        
+        label Time: 
+        input(type='text' name='static[int-1][time]' value='13:20')
+        span  min:sec
+        br
+        br
+        
+        h2 2.Interval
+        
+        label Laktát: 
+        input(type='number' name='static[int-2][lactate]' value='1.4')
+        span  mmol/l 
+        br
+        br
+        
+        label HR max: 
+        input(type='text' name='static[int-2][hr-max]' value='165')
+        span  bpm
+        br
+        br
+        
+        label Time: 
+        input(type='text' name='static[int-2][time]' value='10:49')
+        span  min:sec
+        br
+        br
+        
+        h2 3.Interval
+        
+        label Laktát: 
+        input(type='number' name='static[int-3][lactate]' value='7.5')
+        span  mmol/l 
+        br
+        br
+        
+        label HR max: 
+        input(type='text' name='static[int-3][hr-max]' value='189')
+        span  bpm
+        br
+        br
+        
+        label Time: 
+        input(type='text' name='static[int-3][time]' value='8:20')
+        span  min:sec
+        br
+        br
+        
+        h2 4.Interval
+        
+        label Laktát: 
+        input(type='number' name='static[int-4][lactate]' value='8.8')
+        span  mmol/l 
+        br
+        br
+        
+        label HR max: 
+        input(type='text' name='static[int-4][hr-max]' value='195')
+        span  bpm
+        br
+        br
+        
+        label Time: 
+        input(type='text' name='static[int-4][time]' value='7:39')
+        span  min:sec
+        br
+        br

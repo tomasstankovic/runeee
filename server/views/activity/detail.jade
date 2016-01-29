@@ -1,0 +1,150 @@
+extends ../layout
+
+block content
+  if(update == 'ok')
+    div.alert-msg.ok
+      p <strong>YEAH!</strong> #{__('Activity was updated successfully!')}
+  else if(update == 'ko')
+    iv.alert-msg.ko
+      p <strong>NO!</strong> #{__('Activity wasn\'t updated. Fail:(')}
+  else if(update == 'commentOK')
+    div.alert-msg.ok
+      p <strong>YEAH!</strong> #{__('Your activity comment was successfully saved!')}
+  else if(update == 'commentRemoveOK')
+    div.alert-msg.ok
+      p <strong>YEAH!</strong> #{__('Your activity comment was successfully removed!')}
+    
+  div.component.fixed-header.border-bottom.no-margin
+    div.row
+      div.float-left
+        h2.margin-top #{__('Activity')}: #{activity.title}
+      if isOwnActivity
+        a.button.blue-inverse.border.vertical-center.small.right.no-margin-top(href='/activity/#{activity._id}/delete') <i class='fa fa-trash-o'></i> <strong>#{__('Delete')}</strong> #{__('activity')}
+        a.button.blue.border.vertical-center.small.right.no-margin-top(href='/activity/#{activity._id}/edit') <i class='fa fa-pencil'></i> <strong>#{__('Edit')}</strong> #{__('activity')}
+      
+      if !isAuthenticated 
+        a.homepage__login.button.dark.vertical-center.no-margin-top.margin-right-small(href='/login?next=/activity/#{activity._id}') #{__('Login')}
+        
+  
+  div.row.margin-top-big.padding-big
+    div.component.padding-10.part-3.no-margin
+      div.component.dark.no-margin.padding-big
+        div.row
+          h2 #{activity.title}
+          p.no-margin #{sport.title}
+        div.activity-icons(class='num-#{numOfIcons}')
+          img.activity-img(src='/build/img/icons/sports/#{sport.value}-grey@2x.png' width='60' height='60')
+          if activity.isCompetition
+            img.activity-img(src='/build/img/icons/competition-ok@2x.png' width='60' height='60')
+          if activity.isPublic
+            img.activity-img(src='/build/img/icons/public-ok@2x.png' width='60' height='60')
+            
+            
+      div.component.white.no-margin.padding-40.border-bottom-grey
+        div.row
+          p.no-margin #{__('Date')}
+          p.big #{date}  
+            span #{time}
+            
+      div.component.white.no-margin.padding-40
+        div.row
+          div.float-left 
+            p.no-margin #{__('Duration')}
+            p.big.inline #{activity.duration.hours}
+              span h  
+            p.big.inline #{activity.duration.minutes}
+              span m  
+            p.big.inline #{activity.duration.seconds}
+              span s  
+              
+          div.float-right 
+            p.no-margin #{__('Distance')}
+            p.big.inline #{activity.distance}
+              span km
+                        
+    div.component.padding-10.part-3.no-margin
+      div.component.white.no-margin.padding-40.border-bottom-grey
+        div.row
+          div.float-left
+            p.no-margin #{__('HR max')}
+            p.big.inline #{activity.hr.max}
+              span #{__('bpm')}
+              
+          div.float-right
+            p.no-margin #{__('Calories')}
+            p.big.inline #{activity.calories}
+              span #{__('kj')}
+        
+        div.row.margin-top
+          div.float-left
+            p.no-margin #{__('HR avg')}
+            p.big.inline #{activity.hr.avg}
+              span #{__('bpm')}
+              
+      div.component.white.no-margin.padding-40
+        div.row
+          p.no-margin #{__('Speed max')}
+          p.big.inline #{activity.speed.max}
+            span #{__('km/h')}
+            
+          p.no-margin.margin-top #{__('Speed avg')}
+          p.big.inline #{activity.speed.avg}
+            span #{__('km/h')}
+              
+    div.component.padding-10.part-3.no-margin
+      div.component.white.no-margin.border-bottom-grey.padding-80-40
+        div.row
+          a.opacity-link(href='/profile/#{user.nick}')
+            img.user-avatar(src='#{user.avatar_url}' width='45' height='45')
+            p.no-margin #{user.nick}
+            p.medium.inline #{user.name} #{user.surname}
+      
+      if activity.description
+        div.component.grey.no-margin.padding-40
+          p.no-margin.margin-top #{__('Description')}
+          p.no-margin.dark #{activity.description}
+                        
+  hr
+  
+  div.row.padding-20
+    h2.margin-top #{__('Discussion')}: 
+      span.grey
+        span #{comments.length} 
+        if comments.length == 1
+          span #{__('Comment')}
+        else
+          span #{__('Comments')}
+  
+  div.clearfix
+    if comments.length > 0
+      div.part-2
+        each comment in comments
+          div.component.no-padding.padding-right
+            div.component.white.no-margin.border-bottom-grey
+              div.row
+                a.opacity-link(href='/profile/#{comment.nick}')
+                  img.user-avatar(src='#{comment.avatar_url}' width='45' height='45')
+                  p.no-margin #{comment.nick}
+                  p.medium #{comment.name} #{comment.surname}
+                
+                p.activity-date.absolute-right #{comment.date}
+                
+                if isLogged && comment.nick === loggedUser.nick 
+                  a.link-underline.blue.activity-delete(href='/comment/#{comment._id}/delete?next=activity/#{activity._id}') #{__('delete')}
+        
+            div.component.white.no-margin
+              div.row
+                p #{comment.text}
+    
+    
+    div#comment-fixed.part-2
+      h2 #{__('Write comment')}
+      if isLogged
+        form(action='/comment/#{activity._id}/post?type=activity' method='POST')
+          span.input.input--hoshi
+            textarea.input__field.input__field--hoshi(rows='1' cols='40' name='static[comment]')
+            label.input__label.input__label--hoshi
+              span.input__label-content.input__label-content--hoshi #{__('Type here your comment')}
+          button.button.blue.border.right(type='submit')<strong>#{__('Save')}</strong>  #{__('comment')}
+      else
+        p #{__('To comment, please')} <a class='link-underline blue' href="/login">#{__('login')}</a> #{__('to your  Runeee account')}.

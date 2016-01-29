@@ -1,0 +1,138 @@
+extends ../layout
+
+block content
+  if(update == 'ok')
+    div.alert-msg.ok
+      p <strong>YEAH!</strong> #{__('Training was updated successfully!')}
+  else if(update == 'ko')
+    iv.alert-msg.ko
+      p <strong>NO!</strong> #{__('Training wasn\'t updated. Fail:(')}
+  else if(update == 'commentOK')
+    div.alert-msg.ok
+      p <strong>YEAH!</strong> #{__('Training comment updated successfully saved!')}
+  else if(update == 'commentRemoveOK')
+    div.alert-msg.ok
+      p <strong>YEAH!</strong> #{__('Your activity comment was successfully removed!')}
+  
+  div.component.fixed-header.border-bottom.no-margin.training
+    div.row
+      div.float-left
+        h2.margin-top #{__('Training')}: #{training.title}
+      if isOwnActivity || isUserCoach
+        a.button.blue-inverse.border.vertical-center.small.right.no-margin-top(href="/training/#{training._id}/delete") <i class="fa fa-trash-o"></i> <strong>#{__('Delete')}</strong> #{__('training')}
+      if isOwnActivity  
+        a.button.blue.border.vertical-center.small.right.no-margin-top(href="/training/#{training._id}/edit") <i class="fa fa-pencil"></i> <strong>#{__('Edit')}</strong> #{__('training')}
+          
+      if !isAuthenticated 
+        a.homepage__login.button.dark.vertical-center.no-margin-top.margin-right-small(href='/login?next=/training/#{training._id}') #{__('Login')}
+            
+  div.row.margin-top-big.padding-big
+    div.component.padding-10.part-3.no-margin
+      div.component.no-margin.padding-big(class='hr-#{training.hrZone}')
+        div.row
+          h2 #{training.title}
+          p.no-margin #{sport.title}
+        div.activity-icons(class='num-#{numOfIcons}')
+          img.activity-img(src='/build/img/icons/sports/#{sport.value}-grey@2x.png' width='60' height='60')
+          if training.isCompetition
+            img.activity-img(src='/build/img/icons/competition-ok@2x.png' width='60' height='60')
+          if training.isPublic
+            img.activity-img(src='/build/img/icons/public-ok@2x.png' width='60' height='60')                  
+                  
+      div.component.white.no-margin.padding-40.border-bottom-grey
+        div.row
+          p.no-margin #{__('Date')}
+          p.big #{date}
+                  
+      div.component.white.no-margin.padding-40
+        div.row
+          div.float-left 
+            p.no-margin #{__('Duration')}
+            if training.duration.hours 
+              p.big.inline #{training.duration.hours}
+                span h 
+            if training.duration.minutes 
+              p.big.inline #{training.duration.minutes}
+                span m  
+            if training.duration.seconds
+              p.big.inline #{training.duration.seconds}
+                span s  
+                    
+          div.float-right 
+            p.no-margin #{__('Distance')}
+            p.big.inline #{training.distance}
+              span km  
+  
+    div.component.padding-10.part-3.no-margin
+      div.component.white.no-margin.padding-42
+        div.row
+          div.float-left
+            p.no-margin #{__('HR zone characteristic of training')}
+            if training.hrZone === 5
+              p.big #{__('Maximum zone')}
+            else if training.hrZone === 4
+              p.big #{__('Interval training zone')}
+            else if training.hrZone === 3
+              p.big #{__('Pace endurance zone')}
+            else if training.hrZone === 2
+              p.big #{__('Aerobic zone')}
+            else if training.hrZone === 1
+              p.big #{__('Regeneration zone')}
+              
+    div.component.padding-10.part-3.no-margin
+      div.component.white.no-margin.border-bottom-grey.padding-80-40
+        div.row
+          a.opacity-link(href='/profile/#{user.nick}')
+            img.user-avatar(src='#{user.avatar_url}' width='45' height='45')
+            p.no-margin #{user.nick}
+            p.medium.inline #{user.name} #{user.surname}
+              
+      if training.description
+        div.component.grey.no-margin.padding-40
+          p.no-margin.margin-top #{__('Description')}
+          p.no-margin.dark #{training.description}
+                              
+  hr
+  
+  div.row.padding-20
+    h2.margin-top #{__('Discussion')}: 
+      span.grey
+        span #{comments.length} 
+        if comments.length == 1
+          span #{__('Comment')}
+        else
+          span #{__('Comments')}
+
+  div.clearfix
+    if comments.length > 0
+      div.part-2
+        each comment in comments
+          div.component.no-padding.padding-right
+            div.component.white.no-margin.border-bottom-grey
+              div.row
+                a.opacity-link(href='/comment/#{comment.nick}')
+                  img.user-avatar(src='#{comment.avatar_url}' width='45' height='45')
+                  p.no-margin #{comment.nick}
+                  p.medium #{comment.name} #{comment.surname}
+                        
+                p.activity-date.absolute-right #{comment.date}
+              
+                if isLogged && comment.nick === loggedUser.nick 
+                  a.link-underline.blue.activity-delete(href='/comment/#{comment._id}/delete?next=training/#{training._id}') #{__('delete')}
+        
+                
+            div.component.white.no-margin
+              div.row
+                p #{comment.text}
+                
+    div#comment-fixed.part-2
+      h2 #{__('Write comment')}
+      if isLogged
+        form(action='/comment/#{training._id}/post?type=training' method='POST')
+          span.input.input--hoshi
+            textarea.input__field.input__field--hoshi(rows='1' cols='40' name='static[comment]')
+            label.input__label.input__label--hoshi
+              span.input__label-content.input__label-content--hoshi #{__('Type here your comment')}
+          button.button.blue.border.right(type='submit')<strong>#{__('Save')}</strong>  #{__('comment')}
+      else
+        p #{__('To comment, please')} <a class='link-underline blue' href="/login">#{__('login')}</a> #{__('to your  Runeee account')}.

@@ -1,0 +1,28 @@
+.link-underline
+  position relative
+  display inline-block
+
+  &:after
+    content ''
+    position absolute
+    bottom 0px
+    left 0
+    width 0%
+    height 100%
+    border-bottom 2px solid $grey
+    transition width 100ms ease-in-out
+
+  &.margin-left
+    margin-left 20px
+
+  &.blue
+    color $blue
+
+    &:after
+      border-bottom 2px solid $blue
+
+  &:hover
+    text-decoration none
+
+    &:after
+      width 100%

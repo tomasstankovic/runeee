@@ -1,0 +1,94 @@
+extends ../layout
+
+block content
+  if(update == 'ok')
+    div.alert-msg.ok
+      p <strong>YEAH!</strong> #{__('Lactate test was updated successfully!')}
+  else if(update == 'ko')
+    iv.alert-msg.ko
+      p <strong>NO!</strong> #{__('Lactate test wasn\'t updated. Fail:(')}
+    
+  div.component.fixed-header.border-bottom.no-margin
+    div.row
+      div.float-left
+        h2.margin-top #{__('Lactate test')}
+      if isOwnActivity
+        a.button.blue-inverse.border.vertical-center.small.right.no-margin-top(href='/lactate-test/#{lactate._id}/delete') <i class='fa fa-trash-o'></i> <strong>#{__('Delete')}</strong> #{__('lactate test')}
+        a.button.blue.border.vertical-center.small.right.no-margin-top(href='/lactate-test/#{lactate._id}/edit') <i class='fa fa-pencil'></i> <strong>#{__('Edit')}</strong> #{__('lactate test')}
+      
+      if !isAuthenticated 
+        a.homepage__login.button.dark.vertical-center.no-margin-top.margin-right-small(href='/login?next=/lactate-test/#{lactate._id}') #{__('Login')}
+  
+  div.row.margin-top-big.padding-big
+    h3 Vzdialenosť: 4x #{lactate.intervalDistance}m
+    p Dátum: #{date} | Čas: #{time}
+    p Teplota: #{lactate.temperature}°C | Miesto merania: #{lactate.place}
+    
+    
+    p.no-margin #{sport.title}
+    div
+      img.activity-img(src='/build/img/icons/sports/#{sport.value}-grey@2x.png' width='60' height='60')
+              
+    hr
+    h3 1. interval
+    p. 
+      Laktát: #{lactate.test[0].lactate}mmol/l | 
+      HR max: #{lactate.test[0].hrMax}bpm | 
+      Time: #{lactate.test[0].time}mm/ss
+
+    h3 2. interval
+    p. 
+      Laktát: #{lactate.test[1].lactate}mmol/l | 
+      HR max: #{lactate.test[1].hrMax}bpm | 
+      Time: #{lactate.test[1].time}mm/ss
+
+    h3 3. interval
+    p. 
+      Laktát: #{lactate.test[2].lactate}mmol/l | 
+      HR max: #{lactate.test[2].hrMax}bpm | 
+      Time: #{lactate.test[2].time}mm/ss
+        
+    h3 4. interval
+    p. 
+      Laktát: #{lactate.test[3].lactate}mmol/l | 
+      HR max: #{lactate.test[3].hrMax}bpm | 
+      Time: #{lactate.test[3].time}mm/ss
+
+    hr
+    h3 HR MAX: #{user.hr.max} bpm
+    h3 Anaerobny prah: #{user.hr.anp} bpm
+    h3 Aerobny prah: #{user.hr.ap} bpm
+    hr
+    
+    div.row.no-overflow.clearfix
+      div.component.no-padding.part-3
+        div.component.white
+          div.row
+            h2 #{__('HR zones')}
+            p.no-margin #{__('Beats per minute')}
+                
+          div.row-component
+            img.row-shape(src='/build/img/hr-shape.png' width='12' height='304')
+            div.row-item.border-top
+              span.row-item__zone #{__('Maximum zone')}
+              span.row-item__text #{user.hr.zones.zone5.beats} - #{user.hr.max}
+              
+            div.row-item
+              span.row-item__zone #{__('Interval training zone')}
+              - var zone4end = user.hr.zones.zone5.beats - 1;
+              span.row-item__text #{user.hr.zones.zone4.beats} - #{zone4end}
+                  
+            div.row-item
+              span.row-item__zone #{__('Pace endurance zone')}
+              - var zone3end = user.hr.zones.zone4.beats - 1;
+              span.row-item__text #{user.hr.zones.zone3.beats} - #{zone3end}
+                  
+            div.row-item
+              span.row-item__zone #{__('Aerobic zone')}
+              - var zone2end = user.hr.zones.zone3.beats - 1;
+              span.row-item__text #{user.hr.zones.zone2.beats} - #{zone2end}
+                  
+            div.row-item
+              span.row-item__zone #{__('Regeneration zone')}
+              - var zone1end = user.hr.zones.zone2.beats - 1;
+              span.row-item__text #{user.hr.zones.zone1.beats} - #{zone1end}

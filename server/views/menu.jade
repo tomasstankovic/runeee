@@ -1,0 +1,19 @@
+div.header__menu
+  if isAuthenticated 
+    a.header__menu__item(href='#') <i class="fa fa-bar-chart"></i> #{__('Dashboard')}
+  a.header__menu__item(href='/profile/list' class=(url == '/profile/list') ? 'active' : '') <i class="fa fa-user"></i> #{__('Users')}
+  a.header__menu__item(href='/activity/list' class=(url == '/activity/list') ? 'active' : '') <i class="fa fa-folder-open"></i> #{__('Activites')}
+  a.header__menu__item(href='/training/list' class=(url == '/training/list') ? 'active' : '') <i class="fa fa-folder"></i> #{__('Trainings')}
+  
+if isAuthenticated  
+  div.header__profile
+    span.header__menu__item(href='/profile/#{loggedUser.url}')
+      img.header__profile__img(src='#{loggedUser.avatar_url}_40x40?v=#{loggedUser.avatarDate}' width='40' height='40')
+      <i class="fa fa-angle-down"></i>
+      div.submenu
+        a(href='/profile') #{__('Profile')}
+        a(href='/profile/edit') #{__('Edit profile')}
+        a(href='/logout') #{__('Logout')}
+
+else
+  a.homepage__login.button.dark(href='/login') #{__('Login')}

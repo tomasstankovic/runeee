@@ -1,0 +1,100 @@
+/**
+ * Header.
+ */
+
+.header
+  width 100%
+  height 70px
+  background #e0e0e0
+
+.header__logo
+  position relative
+  float left
+  display block
+  width 260px
+  height 70px
+  background #1e88e5
+
+.header__logo__img
+  position relative
+  top 23px
+  left 65px
+  width 125px
+  height 25px
+
+.header__menu
+  float left
+
+.header__menu__item
+  display inline-block
+  line-height 70px
+  padding 0 35px
+  color #979fa7
+  transition color 200ms
+
+  .fa
+    margin-right 8px
+
+  &:hover,
+  &.active
+    color #4f5f6f
+
+.header__profile
+  float right
+  position relative
+
+  .header__menu__item
+    z-index 8
+    color #37474f
+    padding 0 !important
+    margin 0 35px
+    //transition all 200ms
+
+    &:hover
+      box-shadow 1px 2px 4px rgba(0,0,0,0.15)
+      background #fff
+
+      .submenu
+        opacity 1
+        width 140px
+        height 100px
+        overflow visible
+        box-shadow 1px 4px 4px rgba(0,0,0,0.15)
+        transform translateY(0px)
+
+    .fa
+      margin-left 10px
+      font-size 16px
+
+  .submenu
+    opacity 0
+    width 0
+    height 0
+    overflow hidden
+    z-index 50
+    position absolute
+    right 35px
+    top 60px
+    padding none
+    background #FFF
+    border-radius 8px
+    padding 8px 0
+    //transition opacity 200ms, box-shadow 200ms
+
+    a
+      display block
+      color #37474f
+      padding 8px 20px
+      line-height 17px
+      min-width 100px
+
+      &:hover
+        background #f6f6f6
+
+.header__profile__img
+  position relative
+  top 15px
+  width 40px
+  height 40px
+  border-radius 50%
+  margin-left 15px

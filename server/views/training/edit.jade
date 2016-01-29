@@ -1,0 +1,111 @@
+extends ../layout
+
+block content
+  form(action='/training/#{training._id}/edit?userID=#{user._id}' method='POST')
+    div.component.fixed-header.border-bottom.no-margin
+      div.row
+        div.float-left
+          if isOwnProfile
+            h2.margin-top #{__('Edit training')}
+          else
+            h2.margin-top #{__('Edit training for user')} #{user.nick}
+        button.button.blue.border.vertical-center.small.right.no-margin-top(type='submit') <i class="fa fa-check"></i> <strong>#{__('Save')}</strong> #{__(' updated training')}
+
+    div.edit-row.margin-top-big
+      div.container
+        div.part-2
+          h3 #{__('Title')}
+          span.input.input--hoshi
+            input.input__field.input__field--hoshi(type='text' name='static[title]' value=training.title required)
+            label.input__label.input__label--hoshi
+              span.input__label-content.input__label-content--hoshi #{__('Activity title')}
+                  
+          h3.margin-top #{__('Sport')}
+          div.select-menu
+            select(name='static[sport]')
+              each sport in sports
+                if sport._id.toString() == training.sport 
+                  option(value='#{sport._id}' selected) #{sport.title}
+                else
+                  option(value='#{sport._id}') #{sport.title}
+            span.select-menu__top-label
+            
+          h3.margin-top #{__('HR zone characteristic')}
+          div.select-menu
+            select(name='static[hrZone]')
+              if training.hrZone === 5
+                option(value='5' selected) #{__('Maximum zone')}
+              else
+                option(value='5') #{__('Maximum zone')}
+              if training.hrZone === 4
+                option(value='4' selected) #{__('Interval training zone')}
+              else
+                option(value='4') #{__('Interval training zone')}
+              if training.hrZone === 3
+                option(value='3' selected) #{__('Pace endurance zone')}
+              else
+                option(value='3') #{__('Pace endurance zone')}
+              if training.hrZone === 2
+                option(value='2' selected) #{__('Aerobic zone')}
+              else
+                option(value='2') #{__('Aerobic zone')}
+              if training.hrZone === 1
+                option(value='1' selected) #{__('Regeneration zone')}
+              else
+                option(value='1') #{__('Regeneration zone')}
+            span.select-menu__top-label
+                    
+        div.part-2.padding-bottom
+          h3 #{__('Description')}
+                      
+          span.input.input--hoshi
+            textarea.input__field.input__field--hoshi(rows='1' cols='40' name='static[description]') #{training.description}
+            label.input__label.input__label--hoshi
+              span.input__label-content.input__label-content--hoshi #{__('Type here summary of your activity')}
+              
+          div.checkbox.margin-left.sports.clearfix.image-bg.image-public
+            input(type="checkbox" name="static[isPublic]" value="true" checked=(true === training.isPublic ? "checked" : undefined))
+            label <span></span> 
+              span.img
+              p #{__('Public activity')}
+              
+              
+          div.checkbox.margin-left.sports.clearfix.image-bg.image-competition
+            input(type="checkbox" name="static[isCompetition]" value="true" checked=(true === training.isCompetition ? "checked" : undefined))
+            label <span></span> 
+              span.img
+              p #{__('Competition')}
+              
+    div.edit-row
+      div.container
+        div.part-2
+          h3 #{__('Date')}
+          span.input.input--hoshi
+            input.input__field.input__field--hoshi(type='text' name='static[date]' value='#{date}' required)
+            label.input__label.input__label--hoshi
+              span.input__label-content.input__label-content--hoshi #{__('dd.mm.yy')}
+  
+          h3.margin-top #{__('Duration')}
+          div.clearfix
+            span.input.input--hoshi.part-3
+              input.input__field.input__field--hoshi(type='text' name='static[duration][hours]' value=training.duration.hours)
+              label.input__label.input__label--hoshi
+                span.input__label-content.input__label-content--hoshi #{__('hh')}
+                    
+            span.input.input--hoshi.part-3
+              input.input__field.input__field--hoshi(type='text' name='static[duration][minutes]' value=training.duration.minutes)
+              label.input__label.input__label--hoshi
+                span.input__label-content.input__label-content--hoshi #{__('mm')}
+
+            span.input.input--hoshi.part-3
+              input.input__field.input__field--hoshi(type='text' name='static[duration][seconds]' value=training.duration.seconds)
+              label.input__label.input__label--hoshi
+                span.input__label-content.input__label-content--hoshi #{__('ss')}
+  
+        div.part-2
+          h3 #{__('Distance')}
+          div.clearfix
+            span.input.input--hoshi
+              input.input__field.input__field--hoshi(type='text' name='static[distance]' step='any' value=training.distance)
+              label.input__label.input__label--hoshi
+                span.input__label-content.input__label-content--hoshi #{__('km')}

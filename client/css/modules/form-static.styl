@@ -1,0 +1,441 @@
+.form-static
+  width 540px
+  margin 0 auto
+  margin-bottom 45px
+  border 1px solid #dfdfdf
+  border-radius 5px
+  background #fff
+
+  .row:before,
+  .row:after
+    content " "
+    display table
+
+  .row:after
+    clear both
+
+  .row
+    &.margin-top
+      margin-top 20px
+
+  .container
+    width 320px
+    padding 0
+
+    &.padding-top
+      padding-top 40px
+
+    p
+      font-size 13px
+      color #37474f
+
+      &.margin-20
+        margin 20px 0
+
+    a
+      font-size 13px
+      color #37474f
+      text-decoration underline
+
+      &:hover
+        text-decoration none
+
+      &.half
+        display inline-block
+        width 45%
+
+      &.right
+        float right
+        margin-top 18px
+
+      &.center
+        text-align center
+
+.form-static__header
+  text-transform uppercase
+  color $blue
+  text-align center
+  display block
+  font-style italic
+  margin 30px 0
+
+.form-static__logo
+  position relative
+  display block
+  height 80px
+  width 100%
+  background $blue
+  border-top-right-radius 5px
+  border-top-left-radius 5px
+  box-sizing border-box
+  padding-top 25px
+  margin-bottom 25px
+
+  &:after
+    position absolute
+    bottom -10px
+    left 50%
+    margin-left -5px
+    content ''
+    width 0
+    height 0
+    border-left 10px solid transparent
+    border-right 10px solid transparent
+    border-top 10px solid $blue
+    font-size 0
+    line-height 0
+
+  a
+    position absolute
+    top 50%
+    left 50%
+    margin 0 auto
+    margin-top -12px
+    margin-left -62px
+    display block
+    width 125px
+    height 25px
+
+  img
+    width 125px
+    height 25px
+
+.form-static__others
+  display block
+  background #fafafa
+  padding-top 30px
+  padding-bottom 35px
+  border-bottom-right-radius 5px
+  border-bottom-left-radius 5px
+  border-top 1px solid #dfdfdf
+  margin-top 20px
+
+  &.center
+    text-align center
+
+
+.form-static__input
+  border none
+  border-bottom 1px solid #c1c5c7
+  width 100%
+  height 30px
+  margin-bottom 20px
+  font-style italic
+  transition border 200ms ease-in
+
+  &:focus
+    outline none
+    border-bottom 1px solid #37474f
+
+
+.input
+  position relative
+  display inline-block
+  width 100%
+  vertical-align top
+  margin-bottom 10px
+  box-sizing border-box
+
+  &.half
+    width 45%
+
+  &.part-3
+    width 30%
+
+    &:nth-child(2)
+      margin 0 5%
+
+  &.left
+    float left
+
+  &.right
+    float right
+
+  &.with-tooltip
+    input
+      padding-right 20px
+
+.input__field
+  position relative
+  display block
+  float right
+  border none
+  border-radius 0
+  -webkit-appearance none
+  box-sizing border-box
+
+  &:focus
+    outline none
+
+.input__label
+  z-index 1
+  display inline-block
+  float right
+  padding 0
+  width 100%
+  color #c1c5c7
+  font-size 14px
+  font-style italic
+  user-select none
+
+.input__label-content
+  z-index 1
+  position relative
+  display block
+  width 100%
+
+.input__field--hoshi
+  margin-top 10px
+  padding 10px 5px
+  width 100%
+  background transparent
+
+.input__label--hoshi
+  position absolute
+  bottom 0
+  left 0
+  padding 0 0.25em
+  width 100%
+  height calc(100% - 10px)
+  text-align left
+  pointer-events none
+  box-sizing border-box
+
+.input__label-content--hoshi
+  position absolute
+  top 10px
+  overflow hidden
+
+.input__label--hoshi::before,
+.input__label--hoshi::after
+  content ''
+  position absolute
+  bottom 0
+  left 0
+  width 100%
+  height calc(100% - 10px)
+  border-bottom 1px solid #c1c5c7
+
+.input__label--hoshi::after
+  border-bottom 2px solid $blue
+  width 0%
+  transition width 0.3s
+
+.input__field--hoshi:focus + .input__label--hoshi::after,
+.input--filled .input__label--hoshi::after
+  width 100%
+
+.input__field--hoshi:focus + .input__label--hoshi .input__label-content--hoshi,
+.input--filled .input__label-content--hoshi
+  animation animField 500ms forwards
+
+@keyframes animField {
+  50% {
+    opacity 0
+    transform translate3d(0, 0, 0)
+  }
+  51% {
+    opacity 0
+    transform translate3d(0, -20px, 0)
+  }
+  100% {
+    opacity 1
+    transform translate3d(0, -20px, 0)
+  }
+}
+
+.select-menu
+  position relative
+
+  &.half
+    width 45%
+
+  &.right
+    float right
+
+  label
+    display inline-block
+    float right
+    padding 0
+    width 100%
+    color #c1c5c7
+    font-size 14px
+    font-style italic
+    user-select none
+
+  select
+    position absolute
+    bottom 0
+    left 0
+    width 100%
+    height 39px
+    opacity 0
+
+    &:hover
+      cursor pointer
+
+  .select-menu__top-label
+    display block
+    width 100%
+    height 39px
+    border-bottom 2px solid $blue
+    margin-top 10px
+    padding 10px 5px
+    box-sizing border-box
+    background url('../img/select-arrow.png') no-repeat
+    background-position 94% 19px
+
+
+.checkbox
+  position relative
+  margin-top 10px
+
+  &.half
+    width 45%
+
+  &.left
+    float left
+
+  &.right
+    float right
+
+  &.margin-left
+    margin-left 5px
+
+  input[type=checkbox]
+    z-index 10
+    position absolute
+    top 0
+    left 0
+    width 100%
+    height 100%
+    opacity 0
+
+    &:hover
+      cursor pointer
+
+  input[type=checkbox] + label span
+    position relative
+    top -2px
+    left -6px
+    display inline-block
+    width 20px
+    height 18px
+    margin 0
+    vertical-align middle
+    background url('../img/checkbox.png') left top no-repeat
+    cursor pointer
+
+  input[type=checkbox]:checked + label span
+    background url('../img/checkbox.png') -20px top no-repeat
+
+/**
+ * Tooltip
+ */
+ .tooltip
+  z-index 50
+  position absolute
+  top 21px
+  right 0px
+
+  .tooltip__icon
+    width 16px
+    height 16px
+
+    &:hover
+      cursor pointer
+
+      & + .tooltip__content
+        transform translate3d(0%, 0%, 0)
+
+  .tooltip__content
+    z-index 50
+    position fixed
+    width 30%
+    max-width 300px
+    height 100%
+    background $pink
+    top 0px
+    left 0px
+    font-weight 700
+    transform translate3d(-100%, 0, 0)
+    transition transform 500ms cubic-bezier(0.835, 0, 0.19, 1)
+    vertical-align middle
+    box-sizing border-box
+    padding 25px
+
+    h2
+      color #fff
+      text-align center
+      font-family $fontExo
+      font-weight 700
+      font-style italic
+
+    p
+      color #fff
+      text-align justify
+      font-family $fontExo
+      font-weight 400
+      font-size 14px
+
+
+.inputs-description
+  margin-top 0
+  margin-bottom 3px
+  margin-left 4px
+  color $grey
+
+.checkbox.sports
+  position relative
+  margin 0
+  margin-top 15px
+
+  &:nth-child(2)
+    margin-top 30px
+
+  input[type=checkbox] + label span
+    position absolute
+    top 22px
+    left 0
+
+  img
+    float left
+    display inline-block
+    width 60px
+    height 60px
+    margin-left 40px
+    margin-right 20px
+
+  p
+    float left
+    display inline-block
+    margin-top 22px
+    color #252525
+
+
+.checkbox.image-bg
+    span.img
+      position relative !important
+      top 0 !important
+      width 60px
+      height 60px
+      float left
+      display inline-block
+      margin-left 40px
+      margin-right 20px
+
+    &.image-public
+      margin-top 55px
+
+    &.image-competition span.img
+      background url('../img/icons/competition-checkbox@2x.png')
+      background-position 0 0
+      background-size 60px 120px
+
+    &.image-public span.img
+      background url('../img/icons/public-checkbox@2x.png')
+      background-position 0 0
+      background-size 60px 120px
+
+    input[type=checkbox]:checked + label span.img
+      background-position 0 60px

@@ -1,0 +1,15 @@
+doctype html
+html
+  head
+    include head
+  body
+    div.header
+      a.header__logo(href=(true === isAuthenticated ? '/profile/#{loggedUser.url}' : '/'))
+        img(class='header__logo__img' src='/build/img/logo_full@2x.png' width='125' height='25')
+      
+      include menu
+    
+    block content
+    include footer
+    block scripts
+    include analytics

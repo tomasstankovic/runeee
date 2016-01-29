@@ -1,0 +1,38 @@
+extends ../layout-static
+
+block content
+  h1 <strong>#{__('LOGIN')}</strong> TO YOUR RUNEEE ACCOUNT
+    
+  if message && message.length
+    div.alert-msg.ko
+      p <strong>WHOOOP!</strong> #{message}
+  
+  if (passwordReset == 'ok')
+    div.alert-msg.ok
+      p <strong>YEAH!</strong> #{__('Your new password we sent to your email.')}
+
+  div.container
+    
+    form.form-static(action='/login?next=#{next}', method='POST')
+      div.form-static__logo
+        a.form-static__logo-link(href='/') <img src='build/img/logo_full@2x.png' width='125' height='25' />
+        
+      div.container
+        span.input.input--hoshi
+          input.input__field.input__field--hoshi(type='email' name='email')
+          label.input__label.input__label--hoshi
+            span.input__label-content.input__label-content--hoshi #{__('E-mail')}
+        
+        span.input.input--hoshi
+          input.input__field.input__field--hoshi(type='password' name='password')
+          label.input__label.input__label--hoshi
+            span.input__label-content.input__label-content--hoshi #{__('Password')}
+      
+        div.row.margin-top
+          button.button.blue.border.half(type='submit') #{__('Login')}
+          a.half.center.right(href='/forgott-password') #{__('Forgott your password?')}
+        
+        p.center.margin-20 #{__('Don\'t have an account?')} <a href='/signup'>#{__('Sign up')}</a>
+        
+      div.form-static__others.center
+        a.button.fb.border.wider(href='/auth/facebook') <strong>#{__('Connect')}</strong> #{__('with facebook')}

@@ -1,0 +1,25 @@
+extends ../layout
+
+block content
+  div.component.no-side-padding.no-margin-bottom.margin-top
+    div.row
+      div.float-left
+        h2 #{title} 
+  if lactates.length > 0
+    div.activity.component.no-margin-top
+      each lactate in lactates
+        a.activity-item(href="/lactate-test/#{lactate._id}") 
+          strong Zobrazenie zatial len dev nepremyslene
+          br
+          span Dátum: #{lactate.date}
+          br
+          span 4x #{lactate.intervalDistance}m
+          
+  else
+    div.component
+      div.component.no-padding.empty.with-icon.bg-test
+        div.component.white.margin-top
+          div.row
+            img(src='/build/img/icons/no-test.png' width='171' height='146')
+            h2 #{__('No Lactate test!')}
+            p.no-margin #{__('User don\'t have any lactate test.')}

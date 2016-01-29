@@ -1,0 +1,214 @@
+extends ../layout
+
+block content
+  form(action='/profile/edit' method='POST')
+    div.component.fixed-header.border-bottom.no-margin
+      div.row
+        div.float-left
+          h2.margin-top #{__('Edit profile')}
+        button.button.blue.border.vertical-center.small.right.no-margin-top(type='submit') <i class="fa fa-check"></i> <strong>#{__('Save')}</strong> #{__('profile')}
+    
+    div.edit-row.margin-top-big
+      div.container
+          div.part-2
+            h3 #{__('Facebook')}
+            p #{__('Connect your Facebook account for better experience. We will never post to Facebook.')}
+            if (user.facebook.email)
+              a.button.blue-inverse.border.small.margin-top(href='/unlink/facebook') <strong>#{__('Disconnect')}</strong> #{__('Facebook')}
+            else
+              a.button.blue.border.small.margin-top(href='/connect/facebook') <strong>#{__('Connect')}</strong> #{__('facebook')}
+          div.part-2
+            h3 #{__('Local')}
+            p #{__('Connect local account to have access from everywhere around the world. ')}
+            if (user.local.email)
+              a.button.blue-inverse.border.small.margin-top(href='/unlink/local') <strong>#{__('Disconnect')}</strong> #{__('local')}
+              a.link-underline.blue.margin-left(href='/profile/edit/password') #{__('Edit password')}
+
+            else
+              a.button.blue.border.small.margin-top(href='/connect/local') <strong>#{__('Connect')}</strong> #{__('local')}
+          
+    div.edit-row
+      div.avatar-upload
+        div.avatar-uplaod__img-wrapper#preview
+          input(type='hidden' id='user_id' value='#{user._id}')
+          img.avatar-upload__img(src='#{user.avatar_url}' width='120' height='120')
+            
+        h3 #{__('Upload your photo')}
+        p #{__('Image should be at least 300px x 300px!')}  
+        p.avatar-upload__status#status
+        
+        span.button.small.blue.border <strong>#{__('Upload')}</strong> #{__('photo')}
+          input(type="file" id="files")
+    
+            
+        input(type='hidden' id="avatar_url" name="static[avatar_url]" value="/build/img/default.png")
+    
+    div.edit-row
+      div.container
+        div.part-2
+          h3.margin-bottom #{__('User info')}
+          
+          span.input.input--hoshi
+            input.input__field.input__field--hoshi(type='text' name='static[nick]' value=user.nick)
+            label.input__label.input__label--hoshi
+              span.input__label-content.input__label-content--hoshi #{__('Nickname')}
+                
+          div.row
+            span.input.input--hoshi.half.left
+              input.input__field.input__field--hoshi(type='text' name='static[name]' value=user.name)
+              label.input__label.input__label--hoshi
+                span.input__label-content.input__label-content--hoshi #{__('Name')}
+                  
+            span.input.input--hoshi.half.right
+              input.input__field.input__field--hoshi(type='text' name='static[surname]' value=user.surname)
+              label.input__label.input__label--hoshi
+                span.input__label-content.input__label-content--hoshi #{__('Surname')}
+          
+          div.row
+            span.input.input--hoshi.half.left
+              input.input__field.input__field--hoshi(type='text' name='static[age]' value=user.age)
+              label.input__label.input__label--hoshi
+                span.input__label-content.input__label-content--hoshi #{__('Age')}
+          
+            div.select-menu.half.right
+              label #{__('Gender')}
+              select(name='static[gender]')
+                if user.gender == 'female'  
+                  option(value='male' selected) #{__('Male')}
+                  option(value='female' selected) #{__('Female')}
+                else
+                  option(value='male' selected) #{__('Male')}
+                  option(value='female') #{__('Female')}
+
+              span.select-menu__top-label #{__('Male')}
+                  
+          div.checkbox.half.left.margin-left
+            input(type="checkbox" name="static[isCoach]" value="true" checked=(true === user.isCoach ? "checked" : undefined))
+            label <span></span> #{__('Yes, I\'m a coach!')}
+    
+        div.part-2
+          h3.margin-bottom #{__('Body info')}
+          
+          div.row
+            span.input.input--hoshi.half.left
+              input.input__field.input__field--hoshi(type='text' name='static[weight]' value=user.weight)
+              label.input__label.input__label--hoshi
+                span.input__label-content.input__label-content--hoshi #{__('Weight (kg)')}
+            
+            span.input.input--hoshi.half.right
+              input.input__field.input__field--hoshi(type='text' name='static[height]' value=user.height)
+              label.input__label.input__label--hoshi
+                span.input__label-content.input__label-content--hoshi #{__('Height (cm)')}
+                
+          div.row
+            span.input.input--hoshi.half.left.with-tooltip
+              input.input__field.input__field--hoshi(type='text' name='static[vo2max]' value=user.vo2max)
+              label.input__label.input__label--hoshi
+                span.input__label-content.input__label-content--hoshi #{__('VO2 Max')}
+              
+              div.tooltip
+                img.tooltip__icon(src='/build/img/tooltip.png')
+                div.tooltip__content
+                  h2 WHAT IS VO2 MAX?
+                  p VO2 max (also maximal oxygen consumption, maximal oxygen uptake, peak oxygen uptake or maximal aerobic capacity) is the maximum rate of oxygen consumption as measured during incremental exercise. <br/><br/>Most typically on a motorized treadmill.
+                  
+            span.input.input--hoshi.half.right
+              input.input__field.input__field--hoshi(type='text' name='static[hr][max]' value=user.hr.max)
+              label.input__label.input__label--hoshi
+                span.input__label-content.input__label-content--hoshi #{__('Max HR (beats/min)')}
+
+          div.row
+            span.input.input--hoshi.half.left
+              input.input__field.input__field--hoshi(type='text' name='static[hr][ap]' value=user.hr.ap)
+              label.input__label.input__label--hoshi
+                span.input__label-content.input__label-content--hoshi #{__('AP (beats/min)')}
+                        
+            span.input.input--hoshi.half.right
+              input.input__field.input__field--hoshi(type='text' name='static[hr][anp]' value=user.hr.anp)
+              label.input__label.input__label--hoshi
+                span.input__label-content.input__label-content--hoshi #{__('ANP (beats/min)')}
+    
+    div.edit-row.no-border
+      div.container
+        div.part-2
+          h3 #{__('Sport info')}
+          each sport in sports
+            - var isRendered = false;
+            each userSport in user.sports
+              - if (userSport.toString() === sport._id.toString())
+                - isRendered = true;                
+                div.checkbox.margin-left.sports.clearfix
+                  input(type="checkbox" name="static[sports][#{sport._id}]" value="#{sport._id}" checked='checked')
+                  label <span></span> 
+                    img(src='/build/img/icons/sports/#{sport.value}-grey@2x.png') 
+                    p #{sport.title}
+
+            if !isRendered
+              div.checkbox.margin-left.sports.clearfix
+                input(type="checkbox" name="static[sports][#{sport._id}]" value="#{sport._id}")
+                label <span></span> 
+                  img(src='/build/img/icons/sports/#{sport.value}-grey@2x.png') 
+                  p #{sport.title}
+
+        div.part-2
+          h3 #{__('HR zones')}
+            
+          div.row.border-bottom
+            p #{__('Maximum zone')}
+            span.input.input--hoshi.half.left
+              input.input__field.input__field--hoshi(type='text' name='static[hr][zones][zone5][beats]' value=user.hr.zones.zone5.beats)
+              label.input__label.input__label--hoshi
+                span.input__label-content.input__label-content--hoshi #{__('beats/min')}
+            
+            span.input.input--hoshi.half.right
+              input.input__field.input__field--hoshi(type='text' name='static[hr][zones][zone5][percentage]' value=user.hr.zones.zone5.percentage)
+              label.input__label.input__label--hoshi
+                span.input__label-content.input__label-content--hoshi #{__('%')}
+                        
+          div.row.border-bottom
+            p.inputs-description #{__('Interval training zone')}
+            span.input.input--hoshi.half.left
+              input.input__field.input__field--hoshi(type='text' name='static[hr][zones][zone4][beats]' value=user.hr.zones.zone4.beats)
+              label.input__label.input__label--hoshi
+                span.input__label-content.input__label-content--hoshi #{__('beats/min')}
+            
+            span.input.input--hoshi.half.right
+              input.input__field.input__field--hoshi(type='text' name='static[hr][zones][zone4][percentage]' value=user.hr.zones.zone4.percentage)
+              label.input__label.input__label--hoshi
+                span.input__label-content.input__label-content--hoshidsa
+                  
+          div.row.border-bottom
+            p.inputs-description #{__('Pace endurance zone')}
+            span.input.input--hoshi.half.left
+              input.input__field.input__field--hoshi(type='text' name='static[hr][zones][zone3][beats]' value=user.hr.zones.zone3.beats)
+              label.input__label.input__label--hoshi
+                span.input__label-content.input__label-content--hoshi #{__('beats/min')}
+                    
+            span.input.input--hoshi.half.right
+              input.input__field.input__field--hoshi(type='text' name='static[hr][zones][zone3][percentage]' value=user.hr.zones.zone3.percentage)
+              label.input__label.input__label--hoshi
+                span.input__label-content.input__label-content--hoshidsa
+                  
+          div.row.border-bottom
+            p.inputs-description #{__('Aerobic zone')}
+            span.input.input--hoshi.half.left
+              input.input__field.input__field--hoshi(type='text' name='static[hr][zones][zone2][beats]' value=user.hr.zones.zone2.beats)
+              label.input__label.input__label--hoshi
+                span.input__label-content.input__label-content--hoshi #{__('beats/min')}
+                            
+            span.input.input--hoshi.half.right
+              input.input__field.input__field--hoshi(type='text' name='static[hr][zones][zone2][percentage]' value=user.hr.zones.zone2.percentage)
+              label.input__label.input__label--hoshi
+                span.input__label-content.input__label-content--hoshidsa
+
+          div.row.padding
+            p.inputs-description #{__('Regeneration zone')}
+            span.input.input--hoshi.half.left
+              input.input__field.input__field--hoshi(type='text' name='static[hr][zones][zone1][beats]' value=user.hr.zones.zone1.beats)
+              label.input__label.input__label--hoshi
+                span.input__label-content.input__label-content--hoshi #{__('beats/min')}
+                                    
+            span.input.input--hoshi.half.right
+              input.input__field.input__field--hoshi(type='text' name='static[hr][zones][zone1][percentage]' value=user.hr.zones.zone1.percentage)
+              label.input__label.input__label--hoshi
+                span.input__label-content.input__label-content--hoshidsa

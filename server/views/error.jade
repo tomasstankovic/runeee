@@ -1,0 +1,48 @@
+doctype html
+html
+  head
+    include head
+    body.homepage.no-bg
+      
+      div.homepage__header
+        a.homepage__logo(href=(true === isAuthenticated ? '/profile/#{loggedUser.url}' : '/')) 
+          img(class='header__logo__img' src='/build/img/logo_full@2x.png')
+        
+        if isAuthenticated
+          div.header__menu 
+            a.header__menu__item(href='#') <i class="fa fa-bar-chart"></i> #{__('Dashboard')}
+            a.header__menu__item(href='/profile/list' class=(url == '/profile/list') ? 'active' : '') <i class="fa fa-user"></i> #{__('Users')}
+            a.header__menu__item(href='/activity/list' class=(url == '/activity/list') ? 'active' : '') <i class="fa fa-folder-open"></i> #{__('Activites')}
+            a.header__menu__item(href='/training/list' class=(url == '/training/list') ? 'active' : '') <i class="fa fa-folder"></i> #{__('Trainings')}
+            
+          div.header__profile
+            span.header__menu__item(href='/profile/#{loggedUser.url}')
+              img.header__profile__img(src="#{loggedUser.avatar_url}")
+              <i class="fa fa-angle-down"></i>
+              div.submenu
+                a(href='/profile') #{__('Profile')}
+                a(href='/profile/edit') #{__('Edit profile')}
+                a(href='/logout') #{__('Logout')}
+        else
+          a.homepage__login.button.dark(href='/login') #{__('Login')}
+    
+      div.container.fluid    
+        img.icon-404(src='/build/img/404-shit.png' width='208' height='150')
+        h1 WHOOOOOOP! #{status} error
+        
+        p.homepage__text #{__('This is really happy shit, but this is not what you\'re waiting for!')}
+        
+        if (CURRENT_ENV == 'DEVELOPMENT') 
+          p.homepage__text DEV_ONLY: #{message}
+        
+        a.button.blue.border(href='/profile') <strong>#{__('Back')}</strong> #{__('to homepage!')}
+            
+      div.homepage__footer
+        div.container.fluid
+          p 
+            <a class='link-underline blue' href='mailto:letsgo@runeee.com'>letsgo@runeee.com</a> | RUNEEE © 2015. #{__('All rights reserved')} 
+            <span>  |  </span>
+            if locale == 'en'
+              a.link-underline.blue(href='?lang=sk') Slovenčina
+            else if locale == 'sk'
+              a.link-underline.blue(href='?lang=en') English

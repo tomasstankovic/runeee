@@ -1,0 +1,112 @@
+extends ../layout-static
+
+block content
+  h1 <strong>#{__('WOW')},</strong> #{__('ONLY ONE-MORE-STEP')}
+
+  if (alert == 'true')
+    div.alert-msg.ko
+      p <strong>WHOOOP!</strong> #{__('All fields are required for using RUNEEE!')}
+
+  div.container
+    form.form-static(action='/profile/one-more-step' method='POST')
+      div.form-static__logo
+        a.form-static__logo-link(href='/profile') <img src='/build/img/logo_full@2x.png' width='125' height='25'/>
+      
+      div.container
+        
+        span.input.input--hoshi
+          input.input__field.input__field--hoshi(type='text' name='static[nick]' value=user.nick)
+          label.input__label.input__label--hoshi
+            span.input__label-content.input__label-content--hoshi #{__('Nickname')}
+              
+        div.row
+          span.input.input--hoshi.half.left
+            input.input__field.input__field--hoshi(type='text' name='static[name]' value=user.name)
+            label.input__label.input__label--hoshi
+              span.input__label-content.input__label-content--hoshi #{__('Name')}
+                
+          span.input.input--hoshi.half.right
+            input.input__field.input__field--hoshi(type='text' name='static[surname]' value=user.surname)
+            label.input__label.input__label--hoshi
+              span.input__label-content.input__label-content--hoshi #{__('Surname')}
+        
+        div.row
+          span.input.input--hoshi.half.left
+            input.input__field.input__field--hoshi(type='text' name='static[age]' value=user.age)
+            label.input__label.input__label--hoshi
+              span.input__label-content.input__label-content--hoshi #{__('Age')}
+        
+          div.select-menu.half.right
+            label #{__('Gender')}
+            select(name='static[gender]')
+              if user.gender == 'female'  
+                option(value='male' selected) #{__('Male')}
+                option(value='female' selected) #{__('Female')}
+              else
+                option(value='male' selected) #{__('Male')}
+                option(value='female') #{__('Female')}
+
+            span.select-menu__top-label #{__('Male')}
+        
+      div.form-static__others.center
+        div.container
+          
+          div.row
+            span.input.input--hoshi.half.left
+              input.input__field.input__field--hoshi(type='text' name='static[weight]' value=user.weight)
+              label.input__label.input__label--hoshi
+                span.input__label-content.input__label-content--hoshi #{__('Weight (kg)')}
+            
+            span.input.input--hoshi.half.right
+              input.input__field.input__field--hoshi(type='text' name='static[height]' value=user.height)
+              label.input__label.input__label--hoshi
+                span.input__label-content.input__label-content--hoshi #{__('Height (cm)')}
+                
+          div.row
+            span.input.input--hoshi.half.left.with-tooltip
+              input.input__field.input__field--hoshi(type='text' name='static[vo2max]' value=user.vo2max)
+              label.input__label.input__label--hoshi
+                span.input__label-content.input__label-content--hoshi #{__('VO2 Max')}
+              
+              div.tooltip
+                img.tooltip__icon(src='/build/img/tooltip.png')
+                div.tooltip__content
+                  h2 #{__('What is VO2 max?')}
+                  p #{__('VO2 max (also maximal oxygen consumption, maximal oxygen uptake, peak oxygen uptake or maximal aerobic capacity) is the maximum rate of oxygen consumption as measured during incremental exercise. <br/><br/>Most typically on a motorized treadmill.')}
+                  
+            span.input.input--hoshi.half.right
+              input.input__field.input__field--hoshi(type='text' name='static[hr][max]' value=user.hr.max)
+              label.input__label.input__label--hoshi
+                span.input__label-content.input__label-content--hoshi #{__('Max HR (beats/min)')}
+
+          div.row
+            span.input.input--hoshi.half.left.with-tooltip
+              input.input__field.input__field--hoshi(type='text' name='static[hr][ap]' value=user.hr.ap)
+              label.input__label.input__label--hoshi
+                span.input__label-content.input__label-content--hoshi #{__('AeT (beats/min)')}
+            
+              div.tooltip
+                img.tooltip__icon(src='/build/img/tooltip.png')
+                div.tooltip__content
+                  h2 #{__('What is HR AeT?')}
+                  p #{__('The aerobic threshold (AeT) is the level of effort at which anaerobic energy pathways start to be a significant part of energy production. Runners want to increase their aerobic threshold because this will enable them to run faster for longer before they tip into anaerobic metabolism which cannot be sustained for as long.')}
+                        
+            span.input.input--hoshi.half.right.with-tooltip
+              input.input__field.input__field--hoshi(type='text' name='static[hr][anp]' value=user.hr.anp)
+              label.input__label.input__label--hoshi
+                span.input__label-content.input__label-content--hoshi #{__('AT (beats/min)')}
+                
+              div.tooltip
+                img.tooltip__icon(src='/build/img/tooltip.png')
+                div.tooltip__content
+                  h2 #{__('What is HR AT?')}
+                  p #{__('The anaerobic threshold (AT), also called the “lactate threshold,” is the exertion level between aerobic and anaerobic training. The AT is the point during exercise when your body must switch from aerobic to anaerobic metabolism. The AT is a useful measure for deciding exercise intensity for training and racing in endurance sports.')}
+                    
+                
+          div.row
+            div.checkbox.half.left
+              input(type="checkbox" name="static[isCoach]" value="true" checked=(true === user.isCoach ? "checked" : undefined))
+              label <span></span> #{__('Yes, I\'m a coach!')}
+                              
+          div.row.margin-top                
+            button.button.blue.border.center(type='submit') <strong>#{__('save')}</strong> & #{__('start!')}

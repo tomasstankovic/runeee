@@ -1,0 +1,18 @@
+footer(class=(urlPrefix === '/profile' ? 'sidebar' : undefined))
+  p 
+    <a class='link-underline blue' href='mailto:letsgo@runeee.com'>letsgo@runeee.com</a> | RUNEEE © 2015. #{__('All rights reserved')} 
+    <span>  |  </span>
+    if locale == 'en'
+      a.link-underline.blue(href='?lang=sk') Slovenčina
+    else if locale == 'sk'
+      a.link-underline.blue(href='?lang=en') English
+    <span>  |  </span>
+    span Version: #{APP_VER}
+    if CURRENT_ENV !== 'PRODUCTION'
+      <span>  |  </span>
+      span ENV: #{CURRENT_ENV}
+
+if CURRENT_ENV !== 'PRODUCTION'
+  script(src='/build/js/build-dev.js?ver=#{APP_VER}')
+else 
+  script(src='/build/js/build.js?ver=#{APP_VER}')

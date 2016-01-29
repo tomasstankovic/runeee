@@ -1,0 +1,57 @@
+extends ../layout
+
+block content
+  div.component.no-side-padding.no-margin-bottom.margin-top
+    div.row
+      div.float-left
+        h2 #{title} 
+      div.float-left
+        a.filter(href='#{url}' class=(urlPostfix == '') ? 'active' : '') #{__('All activities')}
+        a.filter(href='#{url}?type=trainings' class=(urlPostfix == 'trainings') ? 'active' : '') #{__('Trainings')}
+        a.filter(href='#{url}?type=competitions' class=(urlPostfix == 'competitions') ? 'active' : '') #{__('Competitions')}
+
+  if activities.length > 0
+    div.activity.component.no-margin-top
+      each activity in activities
+        - var currActivitySport = {};
+        
+        each sport in sports
+          if sport._id.toString() == activity.sport.toString()
+            - currActivitySport = sport;
+            
+        a.activity-item(href="/activity/#{activity._id}") 
+          if activity.isCompetition
+            div.competition-mark
+              img(src='/build/img/icons/competition.png' width='16' height='16')
+        
+          img.left-img(src='/build/img/icons/sports/#{currActivitySport.value}-grey@2x.png' width='53' height='53')
+          div.left
+            span.title.textLimiter(title='#{activity.title}') #{activity.title}
+            span.sport-text #{currActivitySport.title}
+            
+          div.right
+            span.activity-date #{activity.date} 
+            span.limiter
+            if activity.distance
+              span <i class="fa fa-arrows-h"></i> #{activity.distance}km 
+            if activity.duration.hours || activity.duration.minutes || activity.duration.seconds
+              span 
+                i.fa.fa-clock-o
+                if activity.duration.hours
+                  span #{activity.duration.hours}h  
+                if activity.duration.minutes
+                  span #{activity.duration.minutes}m 
+                if activity.duration.seconds
+                  span #{activity.duration.seconds}s
+  
+  else
+    div.component.empty.with-icon.bg-activity
+      div.component.white.margin-top
+        div.row
+          img(src='/build/img/icons/no-activity.png' width='171' height='146')
+          h2 #{__('No activities!')}
+          if isOwnProfile
+            p.no-margin #{__('Let\'s move! Do something for your body.')}
+            a.button.blue.border.small(href='/activity/add') <i class="fa fa-plus-circle"></i> #{__('Add')} #{__('activity')}  
+          else
+            p.no-margin #{__('User don\'t have any activities.')}

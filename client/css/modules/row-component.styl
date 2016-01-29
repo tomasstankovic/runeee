@@ -1,0 +1,59 @@
+.row-component
+  position relative
+  margin-left -20px
+  margin-right -20px
+  margin-bottom 20px
+
+  &.no-margin-bottom
+    margin-bottom 0
+
+  hr
+    border none
+    border-top 1px solid #eaeef2
+    margin-bottom 0
+    margin-top 15px
+
+.row-shape
+  position absolute
+  top 30px
+  left 25px
+
+.row-item
+  display block
+  padding 12px
+  padding-left 80px
+  border-bottom 1px solid #eaeef2
+
+  &.border-top
+    border-top 1px solid #eaeef2
+    margin-top 15px
+
+.row-item__zone,
+.row-item__sub
+  display block
+  color #a1b1c2
+  font-size 14px
+
+.row-item__text
+  display block
+  color #37474f
+  font-size 21px
+
+.row-item.user
+  //padding-left 12px
+  position relative
+
+  img
+    position absolute
+    top 50%
+    left 22px
+    margin-top -20px
+    border-radius 50%
+    width 40px
+    height 40px
+
+a.row-item
+  transition opacity 100ms
+
+  &:hover
+    opacity .9

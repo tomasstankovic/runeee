@@ -1,0 +1,14 @@
+doctype html
+html
+  head
+    include head
+  body.static
+    block content
+    p.center.small <a class='link-underline blue' href='mailto:letsgo@runeee.com'>letsgo@runeee.com</a> | RUNEEE © 2015. All rights reserved
+    
+    if CURRENT_ENV !== 'PRODUCTION'
+      script(src='/build/js/build-dev.js?ver=#{APP_VER}')
+    else 
+      script(src='/build/js/build.js?ver=#{APP_VER}')
+    block scripts
+    include analytics

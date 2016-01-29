@@ -1,0 +1,198 @@
+.component
+  position relative
+  padding 20px
+  margin-bottom 20px
+  box-sizing border-box
+  width 100%
+
+  &.padding-big
+    padding 40px 20px
+
+  &.padding-40
+    padding 40px
+
+  &.padding-42
+    padding 42px 40px
+    padding-bottom 43px
+
+  &.padding-80-40
+    padding 78px 40px
+    padding-bottom 79px
+
+  &.no-padding
+    padding 0
+
+  &.no-margin-bottom
+    margin-bottom 0
+
+  &.padding-right
+    padding-right 20px !important
+
+  &:hover .show-on-hover
+    opacity 1
+
+  &.border-bottom
+    border-bottom 1px solid $border
+
+  &.border-bottom-grey
+    border-bottom 1px solid #eaeef2
+
+  &.fixed-header
+    position absolute
+    top 70px
+    left 0
+    background #f5f5f5
+    z-index 5
+    padding: 15px 20px
+
+    .row
+      overflow visible
+
+    &.training
+      background: url('../img/training-bg.png') no-repeat bottom left #f5f5f5;
+      background-size: 425px 73px;
+
+    .homepage__login
+      position absolute
+      top -7px
+      right 0
+      opacity 0
+      transform translateX(300px)
+      transition opacity 150ms ease-in, color 100ms linear, background 100ms linear
+
+  &.fixed
+    position fixed
+    top 0
+    left 0
+    background #f5f5f5
+
+    .homepage__login
+      opacity 1
+      transform translateY(0px)
+
+  &.margin-top
+    margin-top 10px
+
+  &.no-margin
+    margin 0
+
+  &.white
+    background #fff
+    box-shadow 2px 2px 6px rgba(0, 0, 0, .15)
+
+  &.dark
+    background #37474f
+    box-shadow 2px 2px 6px rgba(0, 0, 0, .15)
+
+    h2
+      color #f5f5f5
+
+  &.grey
+    background #fafafa
+    box-shadow 2px 2px 6px rgba(0, 0, 0, .15)
+
+    h2
+      color #f5f5f5
+
+  &.no-side-padding
+    padding 20px 0
+
+    .row
+      padding 0 20px
+
+  &.no-padding
+    padding 0
+
+  &.no-margin-bottom
+    margin-bottom 0
+
+  &.no-margin-top
+    margin-top 0
+
+  &.part-2
+    float left
+    width 50%
+    padding 0 3px
+
+    &:first-child
+      padding-left 0
+
+    &:last-child
+      padding-right 0
+
+  &.part-3
+    float left
+    width 33.3%
+    padding 0 3px
+
+    &.padding-10
+      padding 0 10px
+
+    &:first-child
+      padding-left 0
+
+    &:last-child
+      padding-right 0
+
+  &.empty
+    text-align center
+
+    &.bg-test .component
+      background url('/build/img/bg/no-test.png') #fff bottom left repeat-x
+
+    &.bg-activity .component
+      background url('/build/img/bg/no-activity.png') #fff top center no-repeat
+
+    img
+      margin-bottom 30px
+
+    .component
+      padding 180px 20px
+
+    .button
+      margin-top 35px
+
+    &.with-icon
+      .component
+        padding 80px 20px
+        padding-top 50px
+
+  &.hr-1
+    background $hr1
+    box-shadow 2px 2px 6px rgba(0, 0, 0, .15)
+
+    h2, p
+      color #f5f5f5
+
+  &.hr-2
+    background $hr2
+    box-shadow 2px 2px 6px rgba(0, 0, 0, .15)
+
+    h2, p
+          color #37474f
+
+  &.hr-3
+    background $hr3
+    box-shadow 2px 2px 6px rgba(0, 0, 0, .15)
+
+    h2, p
+          color #37474f
+
+  &.hr-4
+    background $hr4
+    box-shadow 2px 2px 6px rgba(0, 0, 0, .15)
+
+    h2, p
+          color #f5f5f5
+
+  &.hr-5
+    background $hr5
+    box-shadow 2px 2px 6px rgba(0, 0, 0, .15)
+
+    h2, p
+          color #f5f5f5
+
+#comment-fixed.fixed
+  position fixed
+  top 65px
+  right 0
