@@ -1,4 +1,4 @@
-![Runeee](client/img/logo_full_blue@2x.png?raw=true "Runeee")
+# ![Runeee](client/img/logo_full_blue@2x.png?raw=true "Runeee")
 
 ## Description
 Runeee is my bachelor thesis, developed in the school year 2014/2015. It sports application which allows you to schedule workouts by coach training diary, diary lactate, forecast HR zones and much more. I was an analysis of the lactate tests, but these sources do not include it.
