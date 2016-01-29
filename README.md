@@ -1,4 +1,4 @@
-# Runeee
+![Runeee](client/img/logo_full_blue@2x.png?raw=true "Runeee")
 
 ## Description
 Runeee is my bachelor thesis, developed in the school year 2014/2015. It sports application which allows you to schedule workouts by coach training diary, diary lactate, forecast HR zones and much more. I was an analysis of the lactate tests, but these sources do not include it.
@@ -9,7 +9,7 @@ The application is based on Node.js using Express.js, MongoDB, Jade templates, S
 ## App Screenshots
 ![Profile screenshot](app_screenshots/5_profile.png?raw=true "Profile screenshot")
 
-Want to see more screenshots? [Come on it!](https://github.com/slinto/runeee/SCREENSHOTS.md)
+Want to see more screenshots? [Come on it!](https://github.com/slinto/runeee/blob/master/SCREENSHOTS.md)
 
 ## Credits
 Developer (Bachelor thesis) / [Tomáš Stankovič](http://slinto.sk) / [@TomasStankovic](http://twitter.com/TomasStankovic)
