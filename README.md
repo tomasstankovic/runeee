@@ -40,7 +40,7 @@ gulp
 Type `gulp` or `gulp server` and open localhost:8080 in your browser.
 
 ### Production build
-> Compilation of Stylus code, minifying CSS code, image minifying and run Google Closure Compiler.
+> Compilation of Stylus code, minifying CSS code, image minifying and run Webpack compiler.
 
 ```
 gulp build
