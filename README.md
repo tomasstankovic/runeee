@@ -9,7 +9,7 @@ The application is based on Node.js using Express.js, MongoDB, Jade templates, S
 ## App Screenshots
 ![Profile screenshot](app_screenshots/5_profile.png?raw=true "Profile screenshot")
 
-Want to see more ? [Come on and check creenshots](https://github.com/slinto/runeee/blob/master/SCREENSHOTS.md) or check this url [test.runeee.com](https://test.runeee.com/)
+Want to see more ? [Come on and check screenshots](https://github.com/slinto/runeee/blob/master/SCREENSHOTS.md) or check this url [test.runeee.com](https://test.runeee.com/)
 
 ## Credits
 Developer (Bachelor thesis) / [Tomáš Stankovič](http://slinto.sk) / [@TomasStankovic](http://twitter.com/TomasStankovic)
