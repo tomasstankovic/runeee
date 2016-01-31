@@ -32,8 +32,7 @@ npm install && bower install
 ```
 
 ### Recommended dev workflow
-> Run server, nodemon for automatically reload node.js app, livereloading when is jade, js or css changed and run JSHint. Automatic compilation of Stylus code and automatic creating of google deps file.
-
+> Run server, nodemon for automatically reload node.js app, livereloading, ...
 ```
 gulp
 ```
